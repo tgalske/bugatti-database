@@ -19,10 +19,17 @@ services:
   bugatti-adminer:
     image: adminer
     restart: always
-    ports:
-      - 8080:8080
     networks:
       - bugatti-net
+    expose:
+      - "8080"
+    labels:
+      - "traefik.backend=adminer"
+      - "traefik.docker.network=bugatti-net"
+      - "traefik.enable=true"
+      - "traefik.protocol=http"
+      - "traefik.frontend.rule=Host:adminer.thegc.cf"
+      - "traefik.port=8080"
 
 networks:
   bugatti-net:

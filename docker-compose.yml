@@ -15,6 +15,13 @@ services:
     volumes:
       - bugatti-database-volume:/var/lib/mysql
       - ./scripts.sql:/docker-entrypoint-initdb.d/scripts.sql
+    labels:
+      - "traefik.backend=bugatti-database"
+      - "traefik.docker.network=bugatti-net"
+      - "traefik.enable=true"
+      - "traefik.protocol=http"
+      - "traefik.frontend.rule=Host:bugatti-database.thegc.cf"
+      - "traefik.port=3306"
 
   bugatti-adminer:
     image: adminer
